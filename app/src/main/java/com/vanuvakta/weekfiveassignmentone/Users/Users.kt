@@ -9,16 +9,17 @@ data class Users(
     val lname : String? = null,
     val username : String? = null,
     val password : String? = null,
+    val profile : String? = null,
     val batch : String? = null
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -27,6 +28,7 @@ data class Users(
         parcel.writeString(lname)
         parcel.writeString(username)
         parcel.writeString(password)
+        parcel.writeString(profile)
         parcel.writeString(batch)
     }
 
@@ -43,4 +45,5 @@ data class Users(
             return arrayOfNulls(size)
         }
     }
+
 }

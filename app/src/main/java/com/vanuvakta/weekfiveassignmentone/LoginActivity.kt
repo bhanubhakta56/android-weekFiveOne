@@ -20,16 +20,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var invalid:TextView
     private lateinit var username:String
     private lateinit var password:String
-    val MIN_PASSWORD_LENGTH = 6
+    private lateinit var currentUser:String
+    private lateinit var profile:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         loadUser()
         btnLogin=findViewById(R.id.btnLogin)
         etUsername=findViewById(R.id.etUsername)
         etPassword=findViewById(R.id.etPassword)
         signupLink=findViewById(R.id.signupLink)
         invalid=findViewById(R.id.invalid)
+
         signupLink.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
 
@@ -43,6 +47,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 if (loginAuthorization()){
                     Toast.makeText(this, "Login Sucessfull", Toast.LENGTH_SHORT).show()
                     val intent=Intent(this, MainActivity::class.java)
+                            .putExtra("currentUser", currentUser)
+                            .putExtra("userList", userList)
+                            .putExtra("profile", profile)
                     startActivity(intent)
                 }
                 else{
@@ -69,14 +76,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         username = etUsername.text.toString()
         password = etPassword.text.toString()
         if(validateInput()){
+//            var c = 0
             for (i in userList.indices){
 //                etUsername.append("${userList.get(i).username}")
 //                etPassword.setText("${userList.get(i).password}")
                 val user = userList.get(i).username
                 val pass = userList.get(i).password
                 if (username==user && password==pass){
+//                    userID=c
+                    currentUser = user.toString()
+                    profile = userList.get(i).profile.toString()
                     return true
                 }
+//                c+=1
             }
         }
         return false
@@ -99,15 +111,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
         // checking minimum password Length
-        if (etPassword.text.length < MIN_PASSWORD_LENGTH) {
-            etPassword.error = "Password Length must be more than " + MIN_PASSWORD_LENGTH + "characters"
-            return false
-        }
+
         return true
     }
     private fun loadUser(){
-        val intent = intent
-        userList = intent.getParcelableArrayListExtra<Users>("userlist") as ArrayList<Users>
+        userList.add(Users(10250163,"ram", "pandey", "ram123", "password", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80", "24B"))
+//        val intent = intent
+//        userList = intent.getParcelableArrayListExtra<Users>("userlist") as ArrayList<Users>
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

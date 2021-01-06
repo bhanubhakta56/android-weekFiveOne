@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vanuvakta.weekfiveassignmentone.R
 import com.vanuvakta.weekfiveassignmentone.Users.Post
+import de.hdodenhof.circleimageview.CircleImageView
 
 class PostAdapter(
     val postList:ArrayList<Post>,
@@ -16,10 +18,12 @@ class PostAdapter(
 ) :RecyclerView.Adapter<PostAdapter.PostViewHolder>()  {
     class PostViewHolder(view: View):RecyclerView.ViewHolder(view){
         val tvUser: TextView
+        val imgProfile:CircleImageView
         val imgPost: ImageView
         val tvStatus: TextView
         init {
             imgPost = view.findViewById(R.id.imgPost)
+            imgProfile = view.findViewById(R.id.imgProfile)
             tvUser = view.findViewById(R.id.tvUser)
             tvStatus = view.findViewById(R.id.tvStatus)
         }
@@ -43,8 +47,15 @@ class PostAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
-        holder.imgPost.setImageResource(R.drawable.i)
+//        holder.imgPost.setImageResource(R.drawable.i)
         holder.tvUser.text=post.user
         holder.tvStatus.text=post.status
+        //Load ikmage with Glide library
+        Glide.with(context)
+                .load(post.profile)
+                .into(holder.imgProfile)
+        Glide.with(context)
+            .load(post.link)
+            .into(holder.imgPost)
     }
 }

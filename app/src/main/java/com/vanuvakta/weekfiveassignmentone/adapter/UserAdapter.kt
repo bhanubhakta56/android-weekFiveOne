@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vanuvakta.weekfiveassignmentone.R
 import com.vanuvakta.weekfiveassignmentone.Users.Users
 import de.hdodenhof.circleimageview.CircleImageView
@@ -35,7 +36,10 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = userList[position]
-        holder.storyImage.setImageResource(R.drawable.i)
+//        holder.storyImage.setImageResource(R.drawable.i)
         holder.tvUser.text = user.fname
+        Glide.with(context)
+                .load(user.profile)
+                .into(holder.storyImage)
     }
 }

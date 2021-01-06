@@ -5,18 +5,20 @@ import android.os.Parcelable
 
 data class Post(
     val user:String?=null,
+    val profile:String?=null,
     val status:String?=null,
     val link:String?=null
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(user)
+        parcel.writeString(profile)
         parcel.writeString(status)
         parcel.writeString(link)
     }
@@ -34,4 +36,5 @@ data class Post(
             return arrayOfNulls(size)
         }
     }
+
 }
